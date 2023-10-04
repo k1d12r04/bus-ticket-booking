@@ -16,6 +16,8 @@ import { Input } from '@/components/ui/input';
 import Link from 'next/link';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { useState } from 'react';
+import register from '@/firebase/auth/register';
+import { useRouter } from 'next/navigation';
 
 const formSchema = z.object({
   email: z.string().email({
@@ -28,6 +30,7 @@ const formSchema = z.object({
 
 const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -37,10 +40,13 @@ const RegisterPage = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const { result, error } = await register(values.email, values.password);
+    if (error) {
+      return console.log(error);
+    }
+    console.log(result);
+    return router.push('/login');
   }
 
   return (
