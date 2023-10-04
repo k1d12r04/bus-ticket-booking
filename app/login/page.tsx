@@ -20,9 +20,11 @@ import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { useState } from 'react';
 
 const formSchema = z.object({
-  email: z.string(),
-  password: z.string().min(3, {
-    message: 'Şifre en az 3 karakter olmalıdır.',
+  email: z.string().email({
+    message: 'Geçerli bir e-posta adresi giriniz.',
+  }),
+  password: z.string().min(6, {
+    message: 'Şifre en az 6 karakter olmalıdır.',
   }),
 });
 
@@ -60,7 +62,7 @@ const LoginPage = () => {
               <FormItem>
                 <FormLabel>E-posta</FormLabel>
                 <FormControl>
-                  <Input type="email" {...field} />
+                  <Input {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -78,17 +80,22 @@ const LoginPage = () => {
                       type={showPassword ? 'text' : 'password'}
                       {...field}
                     />
-                    {showPassword ? (
-                      <AiFillEye
-                        onClick={() => setShowPassword(prevState => !prevState)}
-                        className="w-6 h-6 absolute bottom-[0.35rem] right-5 cursor-pointer"
-                      />
-                    ) : (
-                      <AiFillEyeInvisible
-                        onClick={() => setShowPassword(prevState => !prevState)}
-                        className="w-6 h-6 absolute bottom-[0.35rem]  right-5 cursor-pointer"
-                      />
-                    )}
+                    <button
+                      type="button"
+                      aria-label={
+                        showPassword ? 'Hide password' : 'Show password'
+                      }
+                      role="button"
+                      aria-pressed={showPassword}
+                      onClick={() => setShowPassword(prevState => !prevState)}
+                      className="absolute bottom-[0.35rem] right-5 cursor-pointer"
+                    >
+                      {showPassword ? (
+                        <AiFillEye className="w-6 h-6" />
+                      ) : (
+                        <AiFillEyeInvisible className="w-6 h-6" />
+                      )}
+                    </button>
                   </div>
                 </FormControl>
                 <FormMessage />
