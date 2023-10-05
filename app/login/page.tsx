@@ -20,6 +20,7 @@ import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { useState } from 'react';
 import login from '@/firebase/auth/login';
 import { useRouter } from 'next/navigation';
+import { useToast } from '@/components/ui/use-toast';
 
 const formSchema = z.object({
   email: z.string().email({
@@ -33,6 +34,7 @@ const formSchema = z.object({
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -45,10 +47,30 @@ const LoginPage = () => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const { result, error } = await login(values.email, values.password);
     if (error) {
-      return console.log(error);
+      switch (error.code) {
+        case 'auth/invalid-login-credentials':
+          toast({
+            variant: 'destructive',
+            description: 'Geçersiz e-posta ve/veya şifre.',
+          });
+          break;
+
+        case 'auth/invalid-email':
+          toast({
+            variant: 'destructive',
+            description: 'Geçersiz e-posta adresi.',
+          });
+
+        default:
+          toast({
+            variant: 'destructive',
+            description: 'Bir hata oluştu. Lütfen tekrar deneyin.',
+          });
+      }
+      console.log(error.code);
+    } else {
+      router.push('/');
     }
-    console.log(result);
-    return router.push('/');
   }
 
   return (

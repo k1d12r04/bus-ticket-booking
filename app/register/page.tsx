@@ -18,6 +18,7 @@ import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { useState } from 'react';
 import register from '@/firebase/auth/register';
 import { useRouter } from 'next/navigation';
+import { useToast } from '@/components/ui/use-toast';
 
 import {
   Select,
@@ -43,13 +44,29 @@ const formSchema = z.object({
   surname: z.string().min(1, {
     message: 'Lütfen geçerli bir soyad giriniz.',
   }),
-  gender: z.enum(['erkek', 'kadın']),
-  birthdate: z.date().nullable(),
+  birthdate: z
+    .date()
+    .nullable()
+    .refine(
+      date => {
+        if (date === null) return true;
+        const year = date.getFullYear();
+        return year > 1900 && year < 2023;
+      },
+      {
+        message: 'Lütfen geçerli bir doğum tarihi giriniz. (1900-2022).',
+      }
+    ),
+  gender: z.string({
+    required_error: 'Lütfen bir cinsiyet seçin.',
+  }),
 });
 
 const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
+
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -66,12 +83,26 @@ const RegisterPage = () => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const { result, error } = await register(values.email, values.password);
     if (error) {
-      return console.log(error);
+      switch (error.code) {
+        case 'auth/email-already-in-use':
+          toast({
+            variant: 'destructive',
+            description: 'Bu e-posta zaten kayıtlı.',
+          });
+          break;
+
+        default:
+          toast({
+            variant: 'destructive',
+            description: 'Bir hata oluştu. Lütfen tekrar deneyin.',
+          });
+
+          break;
+      }
+      console.log(error.code);
+    } else {
+      router.push('/login');
     }
-    console.log('clicked');
-    console.log(values);
-    console.log(result);
-    return router.push('/login');
   }
 
   return (
