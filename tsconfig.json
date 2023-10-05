@@ -28,7 +28,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "app/page.jsx",
-    "app/context/AuthContext.js"
+    "context/AuthContext.js"
   ],
   "exclude": ["node_modules"]
 }

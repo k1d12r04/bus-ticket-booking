@@ -29,7 +29,7 @@ export const AuthContextProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={{ user }}>
-      {loading ? <div>Loading...</div> : children}
+      {!loading && children}
     </AuthContext.Provider>
   );
 };
