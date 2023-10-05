@@ -108,13 +108,16 @@ const LoginPage = () => {
               </FormItem>
             )}
           />
+
+          <Button type="submit" className="w-full">
+            Giriş yap
+          </Button>
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4 border-2 border-red-200 p-2 rounded-lg">
-            <p className="underline">Hesabınız yok mu? </p>
+            <p className="underline">Hesabınız yok mu?</p>
             <Button className="h-8">
               <Link href="/register">Kayıt ol</Link>
             </Button>
           </div>
-          <Button type="submit">Giriş yap</Button>
         </form>
       </Form>
     </section>

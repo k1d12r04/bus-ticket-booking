@@ -57,3 +57,10 @@
     @apply bg-background text-foreground;
   }
 }
+
+.react-datepicker__input-container input {
+  padding: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding-inline-start: 15px;
+}
