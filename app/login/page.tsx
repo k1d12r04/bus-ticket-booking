@@ -136,7 +136,7 @@ const LoginPage = () => {
           </Button>
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4 border-2 border-red-200 p-2 rounded-lg">
             <p className="underline">Hesabınız yok mu?</p>
-            <Button className="h-8">
+            <Button className="h-8 bg-slate-900 hover:bg-slate-900/90">
               <Link href="/register">Kayıt ol</Link>
             </Button>
           </div>
