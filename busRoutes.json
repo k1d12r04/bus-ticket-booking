@@ -1,0 +1,70 @@
+{
+  "routes": [
+    {
+      "id": 1,
+      "departureCity": "Bursa",
+      "arrivalCity": "İstanbul",
+      "date": "10-10-2023",
+      "availableSeats": 8,
+      "price": 100.0
+    },
+    {
+      "id": 2,
+      "departureCity": "Bursa",
+      "arrivalCity": "Artvin",
+      "date": "10-10-2023",
+      "availableSeats": 16,
+      "price": 355.0
+    },
+
+    {
+      "id": 3,
+      "departureCity": "Bursa",
+      "arrivalCity": "Artvin",
+      "date": "11-10-2023",
+      "availableSeats": 12,
+      "price": 345.0
+    },
+    {
+      "id": 4,
+      "departureCity": "Bursa",
+      "arrivalCity": "İstanbul",
+      "date": "11-10-2023",
+      "availableSeats": 5,
+      "price": 125.0
+    },
+
+    {
+      "id": 5,
+      "departureCity": "Ankara",
+      "arrivalCity": "İstanbul",
+      "date": "12-10-2023",
+      "availableSeats": 4,
+      "price": 225.0
+    },
+    {
+      "id": 6,
+      "departureCity": "Ankara",
+      "arrivalCity": "İstanbul",
+      "date": "12-10-2023",
+      "availableSeats": 7,
+      "price": 235.0
+    },
+    {
+      "id": 7,
+      "departureCity": "Ankara",
+      "arrivalCity": "Artvin",
+      "date": "13-10-2023",
+      "availableSeats": 11,
+      "price": 265.0
+    },
+    {
+      "id": 8,
+      "departureCity": "Ankara",
+      "arrivalCity": "Artvin",
+      "date": "13-10-2023",
+      "availableSeats": 13,
+      "price": 285.0
+    }
+  ]
+}

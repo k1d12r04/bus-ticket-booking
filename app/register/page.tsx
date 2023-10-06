@@ -44,7 +44,7 @@ const formSchema = z.object({
   surname: z.string().min(1, {
     message: 'Lütfen geçerli bir soyad giriniz.',
   }),
-  birthdate: z
+  birthDate: z
     .date()
     .nullable()
     .refine(
@@ -76,7 +76,7 @@ const RegisterPage = () => {
       name: '',
       surname: '',
       gender: undefined,
-      birthdate: new Date(),
+      birthDate: new Date(),
     },
   });
 
@@ -99,6 +99,7 @@ const RegisterPage = () => {
 
           break;
       }
+
       console.log(error.code);
     } else {
       router.push('/login');
@@ -220,7 +221,7 @@ const RegisterPage = () => {
 
             <FormField
               control={form.control}
-              name="birthdate"
+              name="birthDate"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="block md:mb-3">Doğum Tarihi</FormLabel>
