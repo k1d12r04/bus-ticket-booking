@@ -3,6 +3,6 @@ type ContainerProps = {
 };
 
 const Container = ({ children }: ContainerProps) => {
-  return <div className="w-11/12 max-w-4xl mx-auto px-6">{children}</div>;
+  return <div className="w-11/12 max-w-4xl mx-auto px-6 my-5">{children}</div>;
 };
 export default Container;

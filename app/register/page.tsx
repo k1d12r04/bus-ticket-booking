@@ -45,8 +45,9 @@ const formSchema = z.object({
     message: 'Lütfen geçerli bir soyad giriniz.',
   }),
   birthDate: z
-    .date()
-    .nullable()
+    .date({
+      invalid_type_error: 'Lütfen bir tarih seçin.',
+    })
     .refine(
       date => {
         if (date === null) return true;
@@ -102,6 +103,7 @@ const RegisterPage = () => {
 
       console.log(error.code);
     } else {
+      console.log(values.birthDate);
       router.push('/login');
     }
   }
