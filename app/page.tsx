@@ -200,38 +200,31 @@ export default function HomePage() {
         </Form>
 
         {filteredRoutes && filteredRoutes.length > 0 ? (
-          <ul className="mt-8 p-4 border-slate-200 border-2 rounded-sm space-y-6">
+          <ul className="mt-8 p-4 shadow-2xl rounded-sm space-y-6">
             {filteredRoutes.map(route => (
               <li
                 key={route.id}
-                className="border-2 border-red-200 rounded-lg p-6 cursor-pointer hover:bg-red-200 transition"
+                className="text-sm md:text-base border-2 border-red-200 rounded-lg p-2 md:p-6 cursor-pointer hover:bg-red-200 transition"
                 onClick={() => router.push(`/${route.id}`)}
               >
-                <div className="flex justify-evenly items-center mb-8 bg-slate-800 text-red-50 p-4 rounded-lg">
+                <div className="flex justify-between md:justify-evenly items-center mb-6 bg-slate-800 text-red-50 p-4 rounded-lg">
                   <p> Kalkış: {route.departureCity} </p>
-                  <HiArrowLongRight className="w-8 h-8" />
+                  <HiArrowLongRight className="w-8 h-8 hidden sm:block" />
                   <p>Varış: {route.arrivalCity}</p>
                 </div>
-                <div className="flex justify-between bg-gray-800 p-4 text-red-50 rounded-md">
-                  <p className="inline-flex items-center gap-2">
-                    Tarih: {route.date}{' '}
-                    <span>
-                      <BsFillCalendar2EventFill className="w-5 h-5" />
-                    </span>{' '}
-                  </p>
-                  <p className="inline-flex items-center gap-2">
-                    Boş koltuk: {route.availableSeats}{' '}
-                    <span>
-                      <MdOutlineAirlineSeatReclineExtra className="w-5 h-5" />
-                    </span>{' '}
-                  </p>
-                  <p className="inline-flex items-center gap-2">
-                    Fiyat:
-                    {route.price}{' '}
-                    <span>
-                      <FaTurkishLiraSign className="w-4 h-4" />
-                    </span>
-                  </p>
+                <div className="space-y-3 bg-gray-800 p-4 text-red-50 rounded-md">
+                  <div className="flex justify-between md:justify-center md:gap-4 items-center">
+                    <p className="">Tarih: {route.date} </p>
+                    <BsFillCalendar2EventFill className="w-5 h-5" />
+                  </div>
+                  <div className="flex justify-between items-center md:justify-center md:gap-4">
+                    <p className="">Boş koltuk: {route.availableSeats} </p>
+                    <MdOutlineAirlineSeatReclineExtra className="w-5 h-5" />
+                  </div>
+                  <div className="flex justify-between items-center md:justify-center md:gap-4">
+                    <p className="">Fiyat: {route.price} </p>
+                    <FaTurkishLiraSign className="w-4 h-4" />
+                  </div>
                 </div>
               </li>
             ))}
