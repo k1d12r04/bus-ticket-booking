@@ -212,7 +212,7 @@ export default function HomePage() {
                   <HiArrowLongRight className="w-8 h-8 hidden sm:block" />
                   <p>Varış: {route.arrivalCity}</p>
                 </div>
-                <div className="space-y-3 bg-gray-800 p-4 text-red-50 rounded-md">
+                <div className="space-y-3 bg-gray-800 p-4 text-red-50 rounded-md md:flex md:items-center md:justify-evenly md:space-y-0">
                   <div className="flex justify-between md:justify-center md:gap-4 items-center">
                     <p className="">Tarih: {route.date} </p>
                     <BsFillCalendar2EventFill className="w-5 h-5" />

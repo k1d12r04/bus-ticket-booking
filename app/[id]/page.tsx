@@ -15,34 +15,28 @@ const SeatSelectionPage = ({ params }: { params: { id: string } }) => {
   return (
     <section>
       <Container>
-        <div className="flex justify-evenly items-center mb-6 bg-slate-800 text-red-50 p-4 rounded-lg">
+        <div className="flex justify-between md:justify-evenly items-center mb-6 bg-slate-800 text-red-50 p-4 rounded-lg">
           <p> Kalkış: {selectedRoute?.departureCity} </p>
-          <HiArrowLongRight className="w-8 h-8" />
+          <HiArrowLongRight className="w-8 h-8 hidden sm:block" />
           <p>Varış: {selectedRoute?.arrivalCity}</p>
         </div>
-        <div className="flex justify-between bg-gray-800 p-4 text-red-50 rounded-md">
-          <p className="inline-flex items-center gap-2">
-            Tarih: {selectedRoute?.date}{' '}
-            <span>
-              <BsFillCalendar2EventFill className="w-5 h-5" />
-            </span>{' '}
-          </p>
-          <p className="inline-flex items-center gap-2">
-            Boş koltuk: {selectedRoute?.availableSeats}{' '}
-            <span>
-              <MdOutlineAirlineSeatReclineExtra className="w-5 h-5" />
-            </span>{' '}
-          </p>
-          <p className="inline-flex items-center gap-2">
-            Fiyat:
-            {selectedRoute?.price}{' '}
-            <span>
-              <FaTurkishLiraSign className="w-4 h-4" />
-            </span>
-          </p>
+        <div className="space-y-3 bg-gray-800 p-4 text-red-50 rounded-md md:flex md:items-center md:justify-evenly md:space-y-0">
+          <div className="flex justify-between md:justify-center md:gap-4 items-center">
+            <p className="">Tarih: {selectedRoute?.date} </p>
+            <BsFillCalendar2EventFill className="w-5 h-5" />
+          </div>
+          <div className="flex justify-between items-center md:justify-center md:gap-4">
+            <p className="">Boş koltuk: {selectedRoute?.availableSeats} </p>
+            <MdOutlineAirlineSeatReclineExtra className="w-5 h-5" />
+          </div>
+          <div className="flex justify-between items-center md:justify-center md:gap-4">
+            <p className="">Fiyat: {selectedRoute?.price} </p>
+            <FaTurkishLiraSign className="w-4 h-4" />
+          </div>
         </div>
       </Container>
     </section>
   );
 };
+
 export default SeatSelectionPage;
