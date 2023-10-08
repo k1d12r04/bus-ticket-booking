@@ -31,6 +31,9 @@ import {
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
+import addData from '@/firebase/firestore/addData';
+import { useAuthContext } from '@/context/AuthContext';
+
 const formSchema = z.object({
   email: z.string().email({
     message: 'Geçerli bir e-posta adresi giriniz.',
@@ -67,6 +70,8 @@ const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
+  const authContext = useAuthContext();
+
   const { toast } = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -83,6 +88,19 @@ const RegisterPage = () => {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const { result, error } = await register(values.email, values.password);
+    const UserId = authContext?.user?.uid;
+
+    const data = {
+      id: UserId,
+      ...values,
+    };
+
+    const addDataToDb = async () => {
+      if (UserId) {
+        const { result, error } = await addData('users', UserId, data);
+      }
+    };
+    addDataToDb();
     if (error) {
       switch (error.code) {
         case 'auth/email-already-in-use':
@@ -100,10 +118,7 @@ const RegisterPage = () => {
 
           break;
       }
-
-      console.log(error.code);
     } else {
-      console.log(values.birthDate);
       router.push('/login');
     }
   }
