@@ -7,7 +7,7 @@ import { Toaster } from '@/components/ui/toaster';
 const manrope = Manrope({ subsets: ['latin'], weight: ['500', '700'] });
 
 export const metadata: Metadata = {
-  title: 'Biletimi Bul',
+  title: 'Bibilet',
   description: 'Otobüs bileti satın alma uygulaması',
 };
 

@@ -25,8 +25,12 @@ import {
 } from '@/components/ui/select';
 import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
 import busRoutes from '@/busRoutes.json';
+import { useRouter } from 'next/navigation';
+import { HiArrowLongRight } from 'react-icons/hi2';
+import { BsFillCalendar2EventFill } from 'react-icons/bs';
+import { MdOutlineAirlineSeatReclineExtra } from 'react-icons/md';
+import { FaTurkishLiraSign } from 'react-icons/fa6';
 
 type filteredRoutesTypes = {
   id: number;
@@ -79,6 +83,8 @@ export default function HomePage() {
   );
   const routes = busRoutes.routes;
 
+  const router = useRouter();
+
   function onSubmit(values: z.infer<typeof formSchema>) {
     setIsFirstLoad(false);
     const { departure, arrival, selectedDate } = values;
@@ -100,7 +106,7 @@ export default function HomePage() {
   return (
     <main>
       <Container>
-        <h2 className="text-center text-2xl">BİLETİMİ BUL</h2>
+        <h2 className="text-center text-2xl">Bibilet</h2>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -186,7 +192,7 @@ export default function HomePage() {
 
             <Button
               type="submit"
-              className="px-8 w-full block md:w-48 md:py-3 md:h-auto md:mx-auto"
+              className="px-8 w-full block md:w-48 md:py-2 md:h-auto md:mx-auto md:text-base"
             >
               Ara
             </Button>
@@ -194,15 +200,39 @@ export default function HomePage() {
         </Form>
 
         {filteredRoutes && filteredRoutes.length > 0 ? (
-          <ul className="mt-8 p-4 border-slate-200 border-2 rounded-sm space-y-4">
+          <ul className="mt-8 p-4 border-slate-200 border-2 rounded-sm space-y-6">
             {filteredRoutes.map(route => (
               <li
                 key={route.id}
-                className="border-2 border-red-200 rounded-lg p-6 cursor-pointer"
+                className="border-2 border-red-200 rounded-lg p-6 cursor-pointer hover:bg-red-200 transition"
+                onClick={() => router.push(`/${route.id}`)}
               >
-                Kalkış: {route.departureCity} -- Varış: {route.arrivalCity},
-                Tarih: {route.date}, Boş koltuk: {route.availableSeats}, Fiyat:{' '}
-                {route.price} &#8378;
+                <div className="flex justify-evenly items-center mb-8 bg-slate-800 text-red-50 p-4 rounded-lg">
+                  <p> Kalkış: {route.departureCity} </p>
+                  <HiArrowLongRight className="w-8 h-8" />
+                  <p>Varış: {route.arrivalCity}</p>
+                </div>
+                <div className="flex justify-between bg-gray-800 p-4 text-red-50 rounded-md">
+                  <p className="inline-flex items-center gap-2">
+                    Tarih: {route.date}{' '}
+                    <span>
+                      <BsFillCalendar2EventFill className="w-5 h-5" />
+                    </span>{' '}
+                  </p>
+                  <p className="inline-flex items-center gap-2">
+                    Boş koltuk: {route.availableSeats}{' '}
+                    <span>
+                      <MdOutlineAirlineSeatReclineExtra className="w-5 h-5" />
+                    </span>{' '}
+                  </p>
+                  <p className="inline-flex items-center gap-2">
+                    Fiyat:
+                    {route.price}{' '}
+                    <span>
+                      <FaTurkishLiraSign className="w-4 h-4" />
+                    </span>
+                  </p>
+                </div>
               </li>
             ))}
           </ul>
