@@ -36,7 +36,7 @@ const SeatSelectionPage = ({ params }: { params: { id: string } }) => {
           </div>
         </div>
 
-        <Bus totalSeats={20} />
+        <Bus totalSeats={20} price={selectedRoute?.price} />
       </Container>
     </section>
   );

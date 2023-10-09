@@ -72,6 +72,7 @@ const RegisterPage = () => {
 
   const authContext = useAuthContext();
 
+  const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -87,7 +88,12 @@ const RegisterPage = () => {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const { result, error } = await register(values.email, values.password);
+    try {
+      await register(values.email, values.password);
+    } catch (error) {
+      console.log(`Register error: ${error}`);
+    }
+
     const UserId = authContext?.user?.uid;
 
     const data = {
@@ -95,32 +101,52 @@ const RegisterPage = () => {
       ...values,
     };
 
-    const addDataToDb = async () => {
-      if (UserId) {
-        const { result, error } = await addData('users', UserId, data);
+    if (UserId) {
+      try {
+        await addData('users', UserId, data);
+      } catch (error) {
+        console.log(`Add data error: ${error}`);
+      } finally {
+        router.push('/login');
       }
-    };
-    addDataToDb();
-    if (error) {
-      switch (error.code) {
-        case 'auth/email-already-in-use':
-          toast({
-            variant: 'destructive',
-            description: 'Bu e-posta zaten kayıtlı.',
-          });
-          break;
-
-        default:
-          toast({
-            variant: 'destructive',
-            description: 'Bir hata oluştu. Lütfen tekrar deneyin.',
-          });
-
-          break;
-      }
-    } else {
-      router.push('/login');
     }
+
+    // const { result, error } = await register(values.email, values.password);
+    // const UserId = authContext?.user?.uid;
+
+    // const data = {
+    //   id: UserId,
+    //   ...values,
+    // };
+
+    // try {
+    //   if (UserId) {
+    //     await addData('users', UserId, data);
+    //   }
+    // } catch (err) {
+    //   console.log(err);
+    // }
+
+    // if (error) {
+    //   switch (error.code) {
+    //     case 'auth/email-already-in-use':
+    //       toast({
+    //         variant: 'destructive',
+    //         description: 'Bu e-posta zaten kayıtlı.',
+    //       });
+    //       break;
+
+    //     default:
+    //       toast({
+    //         variant: 'destructive',
+    //         description: 'Bir hata oluştu. Lütfen tekrar deneyin.',
+    //       });
+
+    //       break;
+    //   }
+    // } else {
+    //   router.push('/login');
+    // }
   }
 
   return (
@@ -258,7 +284,7 @@ const RegisterPage = () => {
           </div>
 
           <Button type="submit" className="w-full">
-            Kayıt ol
+            {loading ? 'Loading...' : 'Kayıt ol'}
           </Button>
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4 border-2 border-red-200 p-2 rounded-lg">
             <p className="underline">Zaten hesabınız var mı? </p>

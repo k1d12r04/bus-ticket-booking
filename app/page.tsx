@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Container from '@/components/Container';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -26,11 +26,15 @@ import {
 import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import busRoutes from '@/busRoutes.json';
-import { useRouter } from 'next/navigation';
+
 import { HiArrowLongRight } from 'react-icons/hi2';
 import { BsFillCalendar2EventFill } from 'react-icons/bs';
 import { MdOutlineAirlineSeatReclineExtra } from 'react-icons/md';
 import { FaTurkishLiraSign } from 'react-icons/fa6';
+import { useAuthContext } from '@/context/AuthContext';
+import { redirect, useRouter } from 'next/navigation';
+import { getAuth, signOut } from 'firebase/auth';
+import firebase_app from '@/firebase/config';
 
 type filteredRoutesTypes = {
   id: number;
@@ -67,6 +71,18 @@ const formSchema = z.object({
 });
 
 export default function HomePage() {
+  const authContext = useAuthContext();
+  const user = authContext?.user;
+  const auth = getAuth(firebase_app);
+
+  useEffect(() => {
+    if (user == null) {
+      redirect('/register');
+    }
+  }, [user]);
+
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -82,8 +98,6 @@ export default function HomePage() {
     []
   );
   const routes = busRoutes.routes;
-
-  const router = useRouter();
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     setIsFirstLoad(false);
@@ -103,8 +117,19 @@ export default function HomePage() {
     setFilteredRoutes(filteredRoutesArr);
   }
 
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <main>
+      <div className="flex justify-end my-5 mx-32">
+        <Button onClick={handleLogout}>Çıkış yap</Button>
+      </div>
       <Container>
         <h2 className="text-center text-2xl">Bibilet</h2>
 

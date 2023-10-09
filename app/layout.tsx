@@ -4,7 +4,7 @@ import { Manrope } from 'next/font/google';
 import { AuthContextProvider } from '../context/AuthContext';
 import { Toaster } from '@/components/ui/toaster';
 
-const manrope = Manrope({ subsets: ['latin'], weight: ['500', '700'] });
+const manrope = Manrope({ subsets: ['latin'], weight: ['500', '600', '700'] });
 
 export const metadata: Metadata = {
   title: 'Bibilet',
