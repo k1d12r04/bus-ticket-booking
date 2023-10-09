@@ -6,6 +6,7 @@ import { BsFillCalendar2EventFill } from 'react-icons/bs';
 import { MdOutlineAirlineSeatReclineExtra } from 'react-icons/md';
 import { FaTurkishLiraSign } from 'react-icons/fa6';
 import busRoutes from '@/busRoutes.json';
+import Bus from '@/components/Bus';
 
 const SeatSelectionPage = ({ params }: { params: { id: string } }) => {
   const routeId = Number(params.id);
@@ -34,6 +35,8 @@ const SeatSelectionPage = ({ params }: { params: { id: string } }) => {
             <FaTurkishLiraSign className="w-4 h-4" />
           </div>
         </div>
+
+        <Bus totalSeats={20} />
       </Container>
     </section>
   );
