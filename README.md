@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Bibilet
 
-## Getting Started
+Bibilet kullanıcıların kaydolup otobüs bileti satın alabileceği bir uygulamadır.
 
-First, run the development server:
+## Özellikler
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Kullanıcı kayıtlı değilse kayıt ol ekranına yönlendirir.
+2. Kayıt olunurken alınan mail adresi ile kullanıcı firebase'de kayıt edilir.
+3. Kayıt olunurken alınan tüm bilgiler firestore'da kullanıcıya özgü bir şekilde saklanır.
+4. Kayıt olma başarılı ise giriş yap sayfasına yönlendirilir.
+5. Başarılı bir şekilde giriş yapan kullanıcı anasayfaya yönlendirilir.
+6. Anasayfada kullanıcı kriterlerine uygun sefer olup olmadığını girdiği bilgilerle sorgulayabilir.
+7. Uygun sefer varsa ücret, boş koltuk gibi bilgilerle beraber gösterilir.
+8. Uygun sefer yoksa kullanıcıya buna dair bir geri dönüş verilir.
+9. Seferlerden birine basıldığında o seferin bilgilerine ait sayfaya yönlendirilir.
+10. Kullanıcı bu sayfada cinsiyet seçerek koltuk seçimi yapabilir. ( En fazla 5 )
+11. Koltuk seçiminin ardından devam et butonuna basıldığında ödeme sayfasına yönlendirilir.
+12. Ödeme sayfasında gerekli bilgiler girildikten sonra ödeme sonucu gösterilir.
+13. Ödeme sonucunu gören kullanıcı anasayfaya dön butonu ile tekrar sefer arama sayfasına gidebilir.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Kullanılan temel teknolojiler ve sürümleri
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- nextjs ( 13.5.4 )
+- react ( 18 )
+- firebase ( 10.4.0 )
+- tailwindCSS ( 3 )
+- typescript ( 5 )
+- shadcn/ui
+- zod ( 3.22.3 )
+- react hook form ( 7.47.0 )
+- framer motion ( 10.16.4 )
+- next/ui ( 2.1.13 )
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Kurulum ve çalıştırma için gereklilikler
 
-## Learn More
+### .env dosyası
 
-To learn more about Next.js, take a look at the following resources:
+- NEXT_PUBLIC_FIREBASE_API_KEY=
+- NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
+- NEXT_PUBLIC_FIREBASE_PROJECT_ID=
+- NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=
+- NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
+- NEXT_PUBLIC_FIREBASE_APP_ID=
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+`npm install`
+`npm run dev`
