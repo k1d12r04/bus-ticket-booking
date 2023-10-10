@@ -73,8 +73,6 @@ const Seat: React.FC<SeatProps> = ({
     onSelect(seatNumber);
   };
 
-  console.log(selectedGender);
-
   return (
     <Popover open={isOpen} onOpenChange={() => setIsOpen(!isOpen)}>
       <PopoverTrigger>

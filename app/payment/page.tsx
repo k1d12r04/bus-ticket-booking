@@ -28,8 +28,9 @@ const formSchema = z.object({
     })
     .refine(
       value => {
+        const numericValue = value.replace(/\s/g, '');
         const regex = /^\d{13,19}$/;
-        return regex.test(value);
+        return regex.test(numericValue);
       },
       {
         message: 'Lütfen geçerli bir kart numarası giriniz.',
@@ -69,6 +70,12 @@ const PaymentPage = () => {
     },
   });
 
+  function formatCardNumber(value: string) {
+    const numericValue = value.replace(/\D/g, '');
+    const formattedValue = numericValue.replace(/(\d{4})(?=\d)/g, '$1 ');
+    return formattedValue;
+  }
+
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
   }
@@ -105,7 +112,13 @@ const PaymentPage = () => {
                 <FormItem>
                   <FormLabel>Kart numarası</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input
+                      {...field}
+                      onChange={e => {
+                        const formattedValue = formatCardNumber(e.target.value);
+                        field.onChange(formattedValue);
+                      }}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
