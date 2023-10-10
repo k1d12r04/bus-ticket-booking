@@ -7,11 +7,14 @@ import { MdOutlineAirlineSeatReclineExtra } from 'react-icons/md';
 import { FaTurkishLiraSign } from 'react-icons/fa6';
 import busRoutes from '@/busRoutes.json';
 import Bus from '@/components/Bus';
+import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
 
 const SeatSelectionPage = ({ params }: { params: { id: string } }) => {
   const routeId = Number(params.id);
   const routes = busRoutes.routes;
   const selectedRoute = routes.find(route => route.id === routeId);
+  const router = useRouter();
 
   return (
     <section>
@@ -37,6 +40,11 @@ const SeatSelectionPage = ({ params }: { params: { id: string } }) => {
         </div>
 
         <Bus totalSeats={20} price={selectedRoute?.price} />
+        <div className="flex justify-center">
+          <Button className="w-32" onClick={() => router.push('/payment')}>
+            Devam et
+          </Button>
+        </div>
       </Container>
     </section>
   );

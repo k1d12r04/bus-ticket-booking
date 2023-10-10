@@ -73,14 +73,17 @@ const Seat: React.FC<SeatProps> = ({
     onSelect(seatNumber);
   };
 
+  console.log(selectedGender);
+
   return (
     <Popover open={isOpen} onOpenChange={() => setIsOpen(!isOpen)}>
       <PopoverTrigger>
         <div
           className={`cursor-pointer bg-red-50 transition p-2 rounded-sm 
+
+          ${isSelected && selectedGender === 'female' && 'bg-pink-400'}
+          ${isSelected && selectedGender === 'male' && 'bg-sky-500'}
           
-          ${isSelected && selectedGender === 'erkek' && 'bg-sky-500'}
-          ${isSelected && selectedGender === 'kadın' && 'bg-pink-500'}
           `}
         >
           <div>{seatNumber}</div>
@@ -91,7 +94,7 @@ const Seat: React.FC<SeatProps> = ({
         <Button
           onClick={() => {
             handleClosePopover();
-            setSelectedGender('kadın');
+            setSelectedGender('female');
             handleSeatSelect();
           }}
         >
@@ -100,7 +103,7 @@ const Seat: React.FC<SeatProps> = ({
         <Button
           onClick={() => {
             handleClosePopover();
-            setSelectedGender('erkek');
+            setSelectedGender('male');
             handleSeatSelect();
           }}
         >
