@@ -13,6 +13,18 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { useState } from 'react';
+import { Spinner } from '@nextui-org/react';
+import { useRouter } from 'next/navigation';
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+  Button as NextButton,
+} from '@nextui-org/react';
 
 const formSchema = z.object({
   name: z
@@ -61,6 +73,10 @@ const formSchema = z.object({
 });
 
 const PaymentPage = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -76,7 +92,13 @@ const PaymentPage = () => {
     return formattedValue;
   }
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsSubmitting(true);
+
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    setIsSubmitting(false);
+    onOpen();
     console.log(values);
   }
 
@@ -85,7 +107,7 @@ const PaymentPage = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="w-11/12 max-w-2xl space-y-8 border-4 border-slate-400 p-8 rounded-sm"
+          className="relative w-11/12 max-w-2xl space-y-8 border-4 border-slate-400 p-8 rounded-sm"
         >
           <h2 className="text-2xl text-center border-b-2 border-red-400">
             ÖDEME
@@ -152,7 +174,44 @@ const PaymentPage = () => {
             />
           </div>
 
-          <Button className="w-full">Ödemeyi yap</Button>
+          <Button disabled={isSubmitting} className="w-full">
+            {' '}
+            {isSubmitting ? (
+              <Spinner color="success" size="sm" />
+            ) : (
+              'Ödemeyi yap'
+            )}{' '}
+          </Button>
+
+          <Modal
+            hideCloseButton={true}
+            isDismissable={false}
+            isKeyboardDismissDisabled={true}
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+          >
+            <ModalContent>
+              {onClose => (
+                <>
+                  <ModalHeader className="flex flex-col gap-1">
+                    Ödeme Durumu
+                  </ModalHeader>
+                  <ModalBody>
+                    <p>Ödemeniz başarıyla gerçekleşti.</p>
+                  </ModalBody>
+                  <ModalFooter>
+                    <NextButton
+                      onClick={() => router.push('/')}
+                      color="primary"
+                      onPress={onClose}
+                    >
+                      Anasayfaya dön
+                    </NextButton>
+                  </ModalFooter>
+                </>
+              )}
+            </ModalContent>
+          </Modal>
         </form>
       </Form>
     </section>
