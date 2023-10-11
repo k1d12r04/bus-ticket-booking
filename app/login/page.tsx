@@ -21,6 +21,8 @@ import { useState } from 'react';
 import login from '@/firebase/auth/login';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/components/ui/use-toast';
+import busImage from '@/public/images/bus.webp';
+import Image from 'next/image';
 
 const formSchema = z.object({
   email: z.string().email({
@@ -74,11 +76,16 @@ const LoginPage = () => {
   }
 
   return (
-    <section className="flex justify-center items-center h-screen">
+    <section className="grid md:grid-cols-2 lg:grid-cols-5 content-center h-screen">
+      <Image
+        src={busImage}
+        alt="bus image"
+        className="object-cover h-screen hidden md:block lg:col-span-3"
+      />
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="w-11/12 max-w-sm space-y-8 border-4 border-slate-400 p-8 rounded-sm"
+          className="space-y-8 p-8 flex flex-col justify-center lg:col-span-2 "
         >
           <h2 className="text-2xl text-center border-b-2 border-red-400">
             GİRİŞ YAP
