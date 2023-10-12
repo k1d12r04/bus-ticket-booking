@@ -43,12 +43,22 @@ const formSchema = z.object({
   password: z.string().min(6, {
     message: 'Şifre en az 6 karakter olmalıdır.',
   }),
-  name: z.string().min(1, {
-    message: 'Lütfen geçerli bir ad giriniz.',
-  }),
-  surname: z.string().min(1, {
-    message: 'Lütfen geçerli bir soyad giriniz.',
-  }),
+  name: z
+    .string()
+    .min(1, {
+      message: 'Lütfen geçerli bir ad giriniz.',
+    })
+    .refine(value => !/^\s+$/.test(value), {
+      message: 'Ad boşluklardan oluşamaz.',
+    }),
+  surname: z
+    .string()
+    .min(1, {
+      message: 'Lütfen geçerli bir soyad giriniz.',
+    })
+    .refine(value => !/^\s+$/.test(value), {
+      message: 'Soyad boşluklardan oluşamaz.',
+    }),
   birthDate: z
     .date({
       invalid_type_error: 'Lütfen bir tarih seçin.',
