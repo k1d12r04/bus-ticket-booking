@@ -76,7 +76,7 @@ const LoginPage = () => {
   }
 
   return (
-    <section className="grid md:grid-cols-2 lg:grid-cols-5 content-center h-screen">
+    <section className="grid md:grid-cols-2 lg:grid-cols-5 content-center md:h-screen">
       <Image
         src={busImage}
         alt="bus image"
@@ -85,7 +85,7 @@ const LoginPage = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-8 p-8 flex flex-col justify-center lg:col-span-2 "
+          className="space-y-8 p-8 flex flex-col justify-center lg:col-span-2"
         >
           <h2 className="text-2xl text-center border-b-2 border-red-400">
             GİRİŞ YAP

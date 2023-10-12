@@ -33,6 +33,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import addData from '@/firebase/firestore/addData';
 import { useAuthContext } from '@/context/AuthContext';
+import Image from 'next/image';
+import busImage from '@/public/images/bus.webp';
 
 const formSchema = z.object({
   email: z.string().email({
@@ -150,11 +152,16 @@ const RegisterPage = () => {
   }
 
   return (
-    <section className="flex justify-center items-center h-auto my-10 lg:h-screen lg:my-0">
+    <section className="grid md:grid-cols-2 lg:grid-cols-5 content-center md:h-screen">
+      <Image
+        src={busImage}
+        alt="bus image"
+        className="object-cover h-screen hidden md:block lg:col-span-3"
+      />
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="w-11/12 max-w-2xl space-y-8 border-4 border-slate-400 p-8 rounded-sm"
+          className="space-y-8 p-8 lg:col-span-2"
         >
           <h2 className="text-2xl text-center border-b-2 border-red-400">
             KAYIT OL
@@ -245,7 +252,7 @@ const RegisterPage = () => {
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Lütfen cinsiyetinizi seçin" />
+                        <SelectValue placeholder="Cinsiyetinizi seçin" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
