@@ -35,6 +35,7 @@ import addData from '@/firebase/firestore/addData';
 import { useAuthContext } from '@/context/AuthContext';
 import Image from 'next/image';
 import busImage from '@/public/images/bus.webp';
+import { AuthError } from 'firebase/auth';
 
 const formSchema = z.object({
   email: z.string().email({
@@ -101,64 +102,33 @@ const RegisterPage = () => {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      await register(values.email, values.password);
+      const userCredential = await register(values.email, values.password);
+      const user = userCredential.user;
+
+      const UserId = user.uid;
+
+      const data = {
+        id: UserId,
+        ...values,
+      };
+
+      await addData('users', UserId, data);
+
+      router.push('/login');
     } catch (error) {
-      console.log(`Register error: ${error}`);
-    }
-
-    const UserId = authContext?.user?.uid;
-
-    const data = {
-      id: UserId,
-      ...values,
-    };
-
-    if (UserId) {
-      try {
-        await addData('users', UserId, data);
-      } catch (error) {
-        console.log(`Add data error: ${error}`);
-      } finally {
-        router.push('/login');
+      if (error && (error as AuthError).code === 'auth/email-already-in-use') {
+        toast({
+          variant: 'destructive',
+          description: 'Bu e-posta zaten kayıtlı.',
+        });
+      } else {
+        toast({
+          variant: 'destructive',
+          description:
+            'Beklenmeye bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.',
+        });
       }
     }
-
-    // const { result, error } = await register(values.email, values.password);
-    // const UserId = authContext?.user?.uid;
-
-    // const data = {
-    //   id: UserId,
-    //   ...values,
-    // };
-
-    // try {
-    //   if (UserId) {
-    //     await addData('users', UserId, data);
-    //   }
-    // } catch (err) {
-    //   console.log(err);
-    // }
-
-    // if (error) {
-    //   switch (error.code) {
-    //     case 'auth/email-already-in-use':
-    //       toast({
-    //         variant: 'destructive',
-    //         description: 'Bu e-posta zaten kayıtlı.',
-    //       });
-    //       break;
-
-    //     default:
-    //       toast({
-    //         variant: 'destructive',
-    //         description: 'Bir hata oluştu. Lütfen tekrar deneyin.',
-    //       });
-
-    //       break;
-    //   }
-    // } else {
-    //   router.push('/login');
-    // }
   }
 
   return (
