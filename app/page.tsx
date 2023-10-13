@@ -98,6 +98,9 @@ export default function HomePage() {
     []
   );
   const routes = busRoutes.routes;
+  const descendingOrderedRoutes = [];
+  // order routes according to their dates (route.date) with
+  // descending order
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     setIsFirstLoad(false);
@@ -114,7 +117,19 @@ export default function HomePage() {
         routeDate >= selectedDate
       );
     });
-    setFilteredRoutes(filteredRoutesArr);
+
+    const descendingOrderedFilteredRoutes = [...filteredRoutesArr].sort(
+      (a, b) => {
+        const dateA = new Date(a.date.split('/').reverse().join('/'));
+        console.log(dateA);
+        const dateB = new Date(b.date.split('/').reverse().join('/'));
+        console.log(dateB);
+
+        return dateA.getTime() - dateB.getTime();
+      }
+    );
+
+    setFilteredRoutes(descendingOrderedFilteredRoutes);
   }
 
   const handleLogout = async () => {

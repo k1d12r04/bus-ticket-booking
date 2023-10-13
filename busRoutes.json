@@ -12,7 +12,7 @@
       "id": 2,
       "departureCity": "Bursa",
       "arrivalCity": "Artvin",
-      "date": "15/10/2023",
+      "date": "17/10/2023",
       "availableSeats": 16,
       "price": 355.0
     },
@@ -21,7 +21,7 @@
       "id": 3,
       "departureCity": "Bursa",
       "arrivalCity": "Artvin",
-      "date": "9/10/2023",
+      "date": "15/10/2023",
       "availableSeats": 12,
       "price": 345.0
     },
