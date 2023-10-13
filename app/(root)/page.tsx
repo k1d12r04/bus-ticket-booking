@@ -109,9 +109,7 @@ export default function HomePage() {
     const descendingOrderedFilteredRoutes = [...filteredRoutesArr].sort(
       (a, b) => {
         const dateA = new Date(a.date.split('/').reverse().join('/'));
-        console.log(dateA);
         const dateB = new Date(b.date.split('/').reverse().join('/'));
-        console.log(dateB);
 
         return dateA.getTime() - dateB.getTime();
       }

@@ -27,10 +27,10 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "app/page.tsx",
+    "app/(root)/page.tsx",
     "context/AuthContext.tsx",
     "firebase/firestore/addData.ts",
-    "app/[id]/page.jsx"
+    "app/(root)/[id]/page.jsx"
   ],
   "exclude": ["node_modules"]
 }
