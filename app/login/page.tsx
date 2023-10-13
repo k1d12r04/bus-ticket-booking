@@ -23,6 +23,7 @@ import { useRouter } from 'next/navigation';
 import { useToast } from '@/components/ui/use-toast';
 import busImage from '@/public/images/bus.webp';
 import Image from 'next/image';
+import { AuthError } from 'firebase/auth';
 
 const formSchema = z.object({
   email: z.string().email({
@@ -47,31 +48,31 @@ const LoginPage = () => {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const { result, error } = await login(values.email, values.password);
-    if (error) {
-      switch (error.code) {
-        case 'auth/invalid-login-credentials':
-          toast({
-            variant: 'destructive',
-            description: 'Geçersiz e-posta ve/veya şifre.',
-          });
-          break;
+    try {
+      await login(values.email, values.password);
 
-        case 'auth/invalid-email':
-          toast({
-            variant: 'destructive',
-            description: 'Geçersiz e-posta adresi.',
-          });
-
-        default:
-          toast({
-            variant: 'destructive',
-            description: 'Bir hata oluştu. Lütfen tekrar deneyin.',
-          });
-      }
-      console.log(error.code);
-    } else {
       router.push('/');
+    } catch (error) {
+      if (
+        error &&
+        (error as AuthError).code === 'auth/invalid-login-credentials'
+      ) {
+        toast({
+          variant: 'destructive',
+          description: 'E-posta ve/veya şifre yanlış.',
+        });
+      } else if (error && (error as AuthError).code === 'auth/invalid-email') {
+        toast({
+          variant: 'destructive',
+          description: 'Geçersiz e-posta adresi.',
+        });
+      } else {
+        toast({
+          variant: 'destructive',
+          description:
+            'Beklenmeyen bir hata oluştu. Lütfen daha sonra tekrar deneyin.',
+        });
+      }
     }
   }
 
