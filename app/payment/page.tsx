@@ -16,15 +16,9 @@ import { Input } from '@/components/ui/input';
 import { useState } from 'react';
 import { Spinner } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  useDisclosure,
-  Button as NextButton,
-} from '@nextui-org/react';
+import { useDisclosure } from '@nextui-org/react';
+
+import ModalComponent from '@/components/shared/ModalComponent';
 
 const formSchema = z.object({
   name: z
@@ -99,7 +93,6 @@ const PaymentPage = () => {
 
     setIsSubmitting(false);
     onOpen();
-    console.log(values);
   }
 
   return (
@@ -183,35 +176,14 @@ const PaymentPage = () => {
             )}{' '}
           </Button>
 
-          <Modal
-            hideCloseButton={true}
-            isDismissable={false}
-            isKeyboardDismissDisabled={true}
+          <ModalComponent
             isOpen={isOpen}
             onOpenChange={onOpenChange}
-          >
-            <ModalContent>
-              {onClose => (
-                <>
-                  <ModalHeader className="flex flex-col gap-1">
-                    Ödeme Durumu
-                  </ModalHeader>
-                  <ModalBody>
-                    <p>Ödemeniz başarıyla gerçekleşti.</p>
-                  </ModalBody>
-                  <ModalFooter>
-                    <NextButton
-                      onClick={() => router.push('/')}
-                      color="primary"
-                      onPress={onClose}
-                    >
-                      Anasayfaya dön
-                    </NextButton>
-                  </ModalFooter>
-                </>
-              )}
-            </ModalContent>
-          </Modal>
+            header="Ödeme Durumu"
+            body={<p>Ödemeniz başarıyla gerçekleşti.</p>}
+            footerPrimaryActionButtonText="Anasayfaya dön"
+            primaryActionHandler={() => router.push('/')}
+          />
         </form>
       </Form>
     </section>
