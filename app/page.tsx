@@ -16,13 +16,6 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import ReactDatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import busRoutes from '@/busRoutes.json';
@@ -33,6 +26,7 @@ import { MdOutlineAirlineSeatReclineExtra } from 'react-icons/md';
 import { FaTurkishLiraSign } from 'react-icons/fa6';
 import { useAuthContext } from '@/context/AuthContext';
 import { redirect, useRouter } from 'next/navigation';
+import BasicSelectForm from '@/components/shared/BasicSelectForm';
 
 type filteredRoutesTypes = {
   id: number;
@@ -134,62 +128,20 @@ export default function HomePage() {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="mb-5 mt-10 grid gap-x-4 gap-y-4 xs:grid-cols-3 md:gap-x-10">
-              <FormField
-                control={form.control}
+              <BasicSelectForm
                 name="departure"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Kalkış yeri</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Lütfen bir şehir seçin." />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem className="cursor-pointer" value="bursa">
-                          Bursa
-                        </SelectItem>
-                        <SelectItem className="cursor-pointer" value="ankara">
-                          Ankara
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
+                label="Kalkış Yeri"
+                placeholder="Lütfen bir şehir seçin."
+                formControl={form.control}
+                selectValues={['Bursa', 'Ankara']}
               />
 
-              <FormField
-                control={form.control}
+              <BasicSelectForm
                 name="arrival"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Varış yeri</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Lütfen bir şehir seçin." />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem className="cursor-pointer" value="van">
-                          Van
-                        </SelectItem>
-                        <SelectItem className="cursor-pointer" value="artvin">
-                          Artvin
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
+                label="Varış yeri"
+                placeholder="Lütfen bir şehir seçin."
+                formControl={form.control}
+                selectValues={['Van', 'Artvin']}
               />
 
               <FormField

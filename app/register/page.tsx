@@ -20,14 +20,6 @@ import register from '@/firebase/auth/register';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/components/ui/use-toast';
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -38,7 +30,7 @@ import { AuthError } from 'firebase/auth';
 import { Spinner } from '@nextui-org/react';
 
 import BasicForm from '@/components/shared/BasicForm';
-import { Basic } from 'next/font/google';
+import BasicSelectForm from '@/components/shared/BasicSelectForm';
 
 const formSchema = z.object({
   email: z.string().email({
@@ -199,33 +191,12 @@ const RegisterPage = () => {
               formControl={form.control}
             />
 
-            <FormField
-              control={form.control}
+            <BasicSelectForm
               name="gender"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Cinsiyet</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Cinsiyetinizi seçin" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem className="cursor-pointer" value="erkek">
-                        Erkek
-                      </SelectItem>
-                      <SelectItem className="cursor-pointer" value="kadın">
-                        Kadın
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label="Cinsiyet"
+              placeholder="Cinsiyetinizi seçin"
+              formControl={form.control}
+              selectValues={['Erkek', 'Kadın']}
             />
 
             <FormField
