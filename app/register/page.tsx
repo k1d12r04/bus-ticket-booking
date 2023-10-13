@@ -32,10 +32,10 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import addData from '@/firebase/firestore/addData';
-import { useAuthContext } from '@/context/AuthContext';
 import Image from 'next/image';
 import busImage from '@/public/images/bus.webp';
 import { AuthError } from 'firebase/auth';
+import { Spinner } from '@nextui-org/react';
 
 const formSchema = z.object({
   email: z.string().email({
@@ -82,10 +82,8 @@ const formSchema = z.object({
 const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const authContext = useAuthContext();
-
-  const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -101,6 +99,7 @@ const RegisterPage = () => {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsLoading(true);
     try {
       const userCredential = await register(values.email, values.password);
       const user = userCredential.user;
@@ -113,7 +112,7 @@ const RegisterPage = () => {
       };
 
       await addData('users', UserId, data);
-
+      setIsLoading(false);
       router.push('/login');
     } catch (error) {
       if (error && (error as AuthError).code === 'auth/email-already-in-use') {
@@ -128,6 +127,8 @@ const RegisterPage = () => {
             'Beklenmeye bir hata oluştu. Lütfen daha sonra tekrar deneyiniz.',
         });
       }
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -271,7 +272,7 @@ const RegisterPage = () => {
           </div>
 
           <Button type="submit" className="w-full">
-            {loading ? 'Loading...' : 'Kayıt ol'}
+            {isLoading ? <Spinner size="sm" color="success" /> : 'Kayıt ol'}
           </Button>
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4 border-2 border-red-200 p-2 rounded-lg">
             <p className="underline">Zaten hesabınız var mı? </p>

@@ -24,6 +24,7 @@ import { useToast } from '@/components/ui/use-toast';
 import busImage from '@/public/images/bus.webp';
 import Image from 'next/image';
 import { AuthError } from 'firebase/auth';
+import { Spinner } from '@nextui-org/react';
 
 const formSchema = z.object({
   email: z.string().email({
@@ -38,6 +39,7 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -48,9 +50,10 @@ const LoginPage = () => {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsLoading(true);
     try {
       await login(values.email, values.password);
-
+      setIsLoading(false);
       router.push('/');
     } catch (error) {
       if (
@@ -73,6 +76,8 @@ const LoginPage = () => {
             'Beklenmeyen bir hata oluştu. Lütfen daha sonra tekrar deneyin.',
         });
       }
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -140,7 +145,7 @@ const LoginPage = () => {
           />
 
           <Button type="submit" className="w-full">
-            Giriş yap
+            {isLoading ? <Spinner size="sm" color="success" /> : 'Giriş yap'}
           </Button>
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4 border-2 border-red-200 p-2 rounded-lg">
             <p className="underline">Hesabınız yok mu?</p>
