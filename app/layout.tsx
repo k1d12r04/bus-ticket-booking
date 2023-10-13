@@ -4,6 +4,7 @@ import { Manrope } from 'next/font/google';
 import { AuthContextProvider } from '../context/AuthContext';
 import { Toaster } from '@/components/ui/toaster';
 import { NextUIProviderComponent } from './providers/NextUIProviderComponent';
+import Navbar from '@/components/layout/Navbar';
 
 const manrope = Manrope({ subsets: ['latin'], weight: ['500', '600', '700'] });
 
@@ -21,7 +22,10 @@ export default function RootLayout({
     <html lang="tr">
       <body className={manrope.className}>
         <AuthContextProvider>
-          <NextUIProviderComponent>{children}</NextUIProviderComponent>
+          <NextUIProviderComponent>
+            <Navbar />
+            {children}
+          </NextUIProviderComponent>
           <Toaster />
         </AuthContextProvider>
       </body>

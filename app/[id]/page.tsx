@@ -1,6 +1,6 @@
 'use client';
 
-import Container from '@/components/Container';
+import Container from '@/components/shared/Container';
 import { HiArrowLongRight } from 'react-icons/hi2';
 import { BsFillCalendar2EventFill } from 'react-icons/bs';
 import { MdOutlineAirlineSeatReclineExtra } from 'react-icons/md';

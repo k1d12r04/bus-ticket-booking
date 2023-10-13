@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Container from '@/components/Container';
+import Container from '@/components/shared/Container';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -33,8 +33,6 @@ import { MdOutlineAirlineSeatReclineExtra } from 'react-icons/md';
 import { FaTurkishLiraSign } from 'react-icons/fa6';
 import { useAuthContext } from '@/context/AuthContext';
 import { redirect, useRouter } from 'next/navigation';
-import { getAuth, signOut } from 'firebase/auth';
-import firebase_app from '@/firebase/config';
 
 type filteredRoutesTypes = {
   id: number;
@@ -73,7 +71,6 @@ const formSchema = z.object({
 export default function HomePage() {
   const authContext = useAuthContext();
   const user = authContext?.user;
-  const auth = getAuth(firebase_app);
 
   useEffect(() => {
     if (user == null) {
@@ -98,9 +95,6 @@ export default function HomePage() {
     []
   );
   const routes = busRoutes.routes;
-  const descendingOrderedRoutes = [];
-  // order routes according to their dates (route.date) with
-  // descending order
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     setIsFirstLoad(false);
@@ -132,19 +126,8 @@ export default function HomePage() {
     setFilteredRoutes(descendingOrderedFilteredRoutes);
   }
 
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <main>
-      <div className="flex justify-end my-5 mx-32">
-        <Button onClick={handleLogout}>Çıkış yap</Button>
-      </div>
       <Container>
         <h2 className="text-center text-2xl">Bibilet</h2>
 
