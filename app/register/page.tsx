@@ -37,6 +37,9 @@ import busImage from '@/public/images/bus.webp';
 import { AuthError } from 'firebase/auth';
 import { Spinner } from '@nextui-org/react';
 
+import BasicForm from '@/components/shared/BasicForm';
+import { Basic } from 'next/font/google';
+
 const formSchema = z.object({
   email: z.string().email({
     message: 'Geçerli bir e-posta adresi giriniz.',
@@ -46,7 +49,7 @@ const formSchema = z.object({
   }),
   name: z
     .string()
-    .min(1, {
+    .min(2, {
       message: 'Lütfen geçerli bir ad giriniz.',
     })
     .refine(value => !/^\s+$/.test(value), {
@@ -54,7 +57,7 @@ const formSchema = z.object({
     }),
   surname: z
     .string()
-    .min(1, {
+    .min(2, {
       message: 'Lütfen geçerli bir soyad giriniz.',
     })
     .refine(value => !/^\s+$/.test(value), {
@@ -148,19 +151,12 @@ const RegisterPage = () => {
             KAYIT OL
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <FormField
-              control={form.control}
+            <BasicForm
               name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>E-posta</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label="E-posta"
+              formControl={form.control}
             />
+
             <FormField
               control={form.control}
               name="password"
@@ -195,32 +191,14 @@ const RegisterPage = () => {
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Ad</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
+
+            <BasicForm name="name" label="Ad" formControl={form.control} />
+            <BasicForm
               name="surname"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Soyad</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label="Soyad"
+              formControl={form.control}
             />
+
             <FormField
               control={form.control}
               name="gender"

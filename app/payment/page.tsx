@@ -19,6 +19,7 @@ import { useRouter } from 'next/navigation';
 import { useDisclosure } from '@nextui-org/react';
 
 import ModalComponent from '@/components/shared/ModalComponent';
+import BasicForm from '@/components/shared/BasicForm';
 
 const formSchema = z.object({
   name: z
@@ -106,18 +107,10 @@ const PaymentPage = () => {
             ÖDEME
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <FormField
-              control={form.control}
+            <BasicForm
               name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Kartın üstündeki isim</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label="Kartın üstündeki isim"
+              formControl={form.control}
             />
 
             <FormField
@@ -139,31 +132,16 @@ const PaymentPage = () => {
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
+            <BasicForm
               name="expiryDate"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Son kullanma tarihi</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label="Son kullanma tarihi"
+              formControl={form.control}
             />
-            <FormField
-              control={form.control}
+
+            <BasicForm
               name="cvc"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>CVC2 (kartın arkasındaki son 3 rakam)</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label="CVC2 (kartın arkasındaki son 3 rakam)"
+              formControl={form.control}
             />
           </div>
 

@@ -26,6 +26,8 @@ import Image from 'next/image';
 import { AuthError } from 'firebase/auth';
 import { Spinner } from '@nextui-org/react';
 
+import BasicForm from '@/components/shared/BasicForm';
+
 const formSchema = z.object({
   email: z.string().email({
     message: 'Geçerli bir e-posta adresi giriniz.',
@@ -96,19 +98,7 @@ const LoginPage = () => {
           <h2 className="text-2xl text-center border-b-2 border-red-400">
             GİRİŞ YAP
           </h2>
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>E-posta</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <BasicForm name="email" label="E-posta" formControl={form.control} />
           <FormField
             control={form.control}
             name="password"
