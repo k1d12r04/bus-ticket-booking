@@ -77,8 +77,8 @@ const Seat: React.FC<SeatProps> = ({
     <Popover open={isOpen} onOpenChange={() => setIsOpen(!isOpen)}>
       <PopoverTrigger>
         <div
-          className={`cursor-pointer bg-red-50 transition p-2 rounded-sm 
-
+          className={`cursor-pointer transition p-2 rounded-sm 
+          ${!isSelected && 'bg-red-50'}
           ${isSelected && selectedGender === 'female' && 'bg-pink-400'}
           ${isSelected && selectedGender === 'male' && 'bg-sky-500'}
           
